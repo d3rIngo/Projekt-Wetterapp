@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input {
+  /* Stilisierung für das Eingabefeld */
+  padding: 10px;
+  border: 3px solid gray;
+}
+
+button {
+  /* Stilisierung für den Button */
+  padding: 10px;
+  background-color: rgba(0, 0, 255, 0.72);
+  color: white;
+  border: none;
+}
+
+h2 {
+  /* Stilisierung für die Überschrift */
+  font-size: 24px;
+  color: black;
+}
+
+p {
+  /* Stilisierung für die Absätze */
+  font-size: 16px;
+  color: gray;
+}
