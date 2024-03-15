@@ -6,7 +6,6 @@
 "use client";
 import { useState } from 'react';
 import axios from 'axios';
-import React from 'react';
 
 export default function Home() {
   // Zustände für den eingegebenen Ort und die Wetterdaten
