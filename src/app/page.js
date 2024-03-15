@@ -1,19 +1,29 @@
+/**
+ * Diese Komponente stellt die Startseite der Wetter-App dar.
+ * Benutzer können einen Ort eingeben und das aktuelle Wetter für diesen Ort abrufen.
+ * Die Wetterdaten werden von der OpenWeatherMap-API bezogen.
+ */
 "use client";
 import { useState } from 'react';
 import axios from 'axios';
+import React from 'react';
 
 export default function Home() {
+  // Zustände für den eingegebenen Ort und die Wetterdaten
   const [location, setLocation] = useState("");
   const [weatherData, setWeatherData] = useState(null);
 
+  // Funktion zum Aktualisieren des eingegebenen Orts
   const handleLocationChange = (e) => {
     setLocation(e.target.value);
   };
 
-   const kelvinToCelsius = (kelvin) => {
+  // Funktion zur Umwandlung der Temperatur von Kelvin in Celsius
+  const kelvinToCelsius = (kelvin) => {
     return kelvin - 273.15;
   };
 
+  // Funktion zum Abrufen der Wetterdaten von der API
   const fetchWeatherData = async () => {
     try {
       const apiKey = '703ea8efa9355029c4fed6200d35ec0c'; // Deinen Secret Key hier einfügen
@@ -27,20 +37,28 @@ export default function Home() {
     }
   };
 
+  // JSX für die Darstellung der Komponente
   return (
     <div>
+      {/* Eingabefeld für den Ort */}
       <input
         type="text"
         value={location}
         onChange={handleLocationChange}
         placeholder="Ort eingeben"
       />
+      {/* Button zum Abrufen der Wetterdaten */}
       <button onClick={fetchWeatherData}>Wetter abrufen</button>
+      {/* Anzeige der Wetterdaten, wenn vorhanden */}
       {weatherData && (
         <div>
+          {/* Überschrift mit dem Namen des Orts */}
           <h2>Aktuelles Wetter für {weatherData.name}</h2>
+          {/* Anzeige der Temperatur */}
           <p>Temperatur: {weatherData.main.temp_c.toFixed(1)}°C</p>
+          {/* Anzeige des Wetters */}
           <p>Wetterzustand: {weatherData.weather[0].description}</p>
+          {/* Anzeige der Luftfeuchtigkeit */}
           <p>Luftfeuchtigkeit: {weatherData.main.humidity}%</p>
         </div>
       )}
