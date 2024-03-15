@@ -1,3 +1,12 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "next/core-web-vitals" // Verwendet die Standardkonfiguration für Next.js, einschließlich Core Web Vitals
+  ],
+  "rules": {
+    "react/react-in-jsx-scope": "off", // Erlaubt das Verwenden von JSX ohne explizites Importieren von 'React'
+    "react/display-name": "off", // Deaktiviert die Regel, die den Anzeigenamen von Komponenten verlangt (kann bei Next.js zu Fehlern führen)
+    "no-unused-vars": "warn", // Warnt vor nicht verwendeten Variablen anstelle von Fehlern
+    "import/no-anonymous-default-export": "error", // Verbietet anonyme Standardexports, um Dead Code Elimination zu erleichtern
+    "import/no-duplicates": "error" // Verbietet Duplikate beim Importieren von Modulen, um die Bundle-Größe zu reduzieren
+  }
 }
