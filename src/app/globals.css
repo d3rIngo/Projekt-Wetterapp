@@ -54,7 +54,7 @@ h1 {
   font-size: 32px;
   color: #333; /* Dunkle Textfarbe */
   margin-bottom: 20px; /* Abstand zum nächsten Element */
-  text-align: center; /* Zentrieren */
+  text-align: left; /* Zentrieren */
 }
 
 /* Stilisierung für den kurzen Text */

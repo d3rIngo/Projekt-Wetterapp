@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import axios from 'axios';
+import { TiWeatherCloudy, TiWeatherSnow, TiWeatherWindy, TiWeatherShower, TiWeatherSunny } from 'react-icons/ti'; // Importiere Icons von react-icons
 
 export default function Home() {
   // Zustände für den eingegebenen Ort und die Wetterdaten
@@ -13,7 +14,7 @@ export default function Home() {
     setLocation(e.target.value);
   };
 
-  // Funktion zur Umwandlung der Temperatur von Kelvin in Celsius
+  // Funktion zum Umwandeln der Temperatur von Kelvin in Celsius
   const kelvinToCelsius = (kelvin) => {
     return kelvin - 273.15;
   };
@@ -27,6 +28,8 @@ export default function Home() {
       const celsiusTemperature = kelvinToCelsius(response.data.main.temp);
       response.data.main.temp_c = celsiusTemperature;
       setWeatherData(response.data);
+
+      console.log('Weather Description:', response.data.weather[0].description); // Konsolenausgabe für den Wetterzustand
     } catch (error) {
       console.error(error);
     }
@@ -36,6 +39,26 @@ export default function Home() {
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       fetchWeatherData();
+    }
+  };
+
+  // Funktion zur Zuordnung von Icons zu Wetterzuständen
+  const getWeatherIcon = (weatherDescription) => {
+    switch (weatherDescription.toLowerCase()) {
+      case 'klarer himmel':
+        return <TiWeatherSunny size={96} />;
+      case 'leichter regen':
+        return <TiWeatherShower size={96} />;
+      case 'bewölkt':
+        return <TiWeatherCloudy size={96} />;
+      case 'wolken':
+        return <TiWeatherCloudy size={96} />;
+      case 'schnee':
+        return <TiWeatherSnow size={96} />;
+      case 'windig':
+        return <TiWeatherWindy size={96} />;
+      default:
+        return null; // Standard-Icon
     }
   };
 
@@ -65,6 +88,10 @@ export default function Home() {
           <p>Wetterzustand: {weatherData.weather[0].description}</p>
           {/* Anzeige der Luftfeuchtigkeit */}
           <p>Luftfeuchtigkeit: {weatherData.main.humidity}%</p>
+          {/* Anzeige des Icons */}
+          <div className="weather-icon" style={{ textAlign: 'center' }}>
+            {getWeatherIcon(weatherData.weather[0].description)}
+          </div>
         </div>
       )}
     </div>
