@@ -43,7 +43,7 @@ export default function Home() {
   return (
     <div className="container">
       <h1>Wetter-App</h1>
-      <p>Geben Sie einen Ort ein und klicken Sie auf &quot;Wetter abrufen&quot;, um das aktuelle Wetter zu sehen.</p>
+      <p>Geben Sie einen Ortsnamen ein und klicken Sie auf &quot;Wetter abrufen&quot;, um das aktuelle Wetter zu sehen.</p>
       {/* Eingabefeld für den Ort */}
       <input
         type="text"
