@@ -2,14 +2,9 @@
   "version": 2,
   "builds": [
     {
-      "src": "./src/app/page.js",
+      "src": "/src/app/page.js",
       "use": "@vercel/node"
     }
   ],
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/"
-    }
-  ]
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
 }
