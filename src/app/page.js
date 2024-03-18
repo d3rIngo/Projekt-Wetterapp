@@ -1,9 +1,5 @@
-/**
- * Diese Komponente stellt die Startseite der Wetter-App dar.
- * Benutzer können einen Ort eingeben und das aktuelle Wetter für diesen Ort abrufen.
- * Die Wetterdaten werden von der OpenWeatherMap-API bezogen.
- */
-"use client";
+"use client"; // Markiere die Komponente als Client-Komponente
+
 import { useState } from 'react';
 import axios from 'axios';
 
@@ -36,14 +32,24 @@ export default function Home() {
     }
   };
 
+  // Funktion zum Verarbeiten des Tastatur-Events
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      fetchWeatherData();
+    }
+  };
+
   // JSX für die Darstellung der Komponente
   return (
-    <div>
+    <div className="container">
+      <h1>Wetter-App</h1>
+      <p>Geben Sie einen Ort ein und klicken Sie auf &quot;Wetter abrufen&quot;, um das aktuelle Wetter zu sehen.</p>
       {/* Eingabefeld für den Ort */}
       <input
         type="text"
         value={location}
         onChange={handleLocationChange}
+        onKeyPress={handleKeyPress} // Handle Enter key press
         placeholder="Ort eingeben"
       />
       {/* Button zum Abrufen der Wetterdaten */}
@@ -52,7 +58,7 @@ export default function Home() {
       {weatherData && (
         <div>
           {/* Überschrift mit dem Namen des Orts */}
-          <h2>Aktuelles Wetter für {weatherData.name}</h2>
+          <h2>Aktuelles Wetter für {weatherData.name}:</h2>
           {/* Anzeige der Temperatur */}
           <p>Temperatur: {weatherData.main.temp_c.toFixed(1)}°C</p>
           {/* Anzeige des Wetters */}
