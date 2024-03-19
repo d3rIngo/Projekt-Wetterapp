@@ -3,7 +3,7 @@ describe('Wetter-App Tests', () => {
     const location = 'Berlin'; // Beispielort für den Test
 
     // Besuche die Seite und überprüfe, ob sie geladen wird
-    cy.visit('https://wetterapp-two.vercel.app/');
+    cy.visit('https://wetter-now.vercel.app/');
     cy.contains('Wetter-App').should('be.visible');
 
     // Gib den Ort ein und überprüfe, ob das Eingabefeld aktualisiert wird

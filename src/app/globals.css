@@ -5,7 +5,7 @@ html, body {
   justify-content: center;
   align-items: center;
   font-family: 'Roboto', sans-serif; /* Google Font für bessere Lesbarkeit */
-  background-color: #f3f4f6; /* Hintergrundfarbe setzen */
+  transition: background-color 0.5s ease; /* Smooth transition für die Hintergrundfarbe */
 }
 
 /* Hauptcontainer */
@@ -63,4 +63,25 @@ p {
   color: #666; /* Textfarbe */
   margin-bottom: 20px; /* Abstand zum nächsten Element */
   text-align: left;
+}
+
+/* Dynamische Hintergrundfarben basierend auf dem Wetterzustand */
+.sunny {
+  background-color: #ffdb6d; /* Gelb für sonniges Wetter */
+}
+
+.cloudy {
+  background-color: #a7b4c6; /* Grau für bewölktes Wetter */
+}
+
+.showers {
+  background-color: #63b3ed; /* Blau für Regen */
+}
+
+.snow {
+  background-color: #ffffff; /* Weiß für Schnee */
+}
+
+.windy {
+  background-color: #c3dafe; /* Hellblau für windiges Wetter */
 }
