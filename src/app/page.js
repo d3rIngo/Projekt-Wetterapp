@@ -1,6 +1,5 @@
 "use client"; // Markiere die Komponente als Client-Komponente
 
-import React from 'react'; // Importieren Sie React
 import { useState } from 'react';
 import axios from 'axios';
 import { TiWeatherCloudy, TiWeatherSnow, TiWeatherWindy, TiWeatherShower, TiWeatherSunny } from 'react-icons/ti'; // Importiere Icons von react-icons
