@@ -47,6 +47,9 @@ export default function Home() {
         case 'klarer himmel':
           setWeatherClass("sunny");
           break;
+        case 'Ein paar Wolken':
+          setWeatherClass("sunny");
+          break;
         case 'leichter regen':
           setWeatherClass("showers");
           break;
@@ -100,6 +103,8 @@ export default function Home() {
   const getWeatherIcon = (weatherDescription) => {
     switch (weatherDescription.toLowerCase()) {
       case 'klarer himmel':
+        return <TiWeatherSunny size={96} />;
+      case 'Ein paar Wolken':
         return <TiWeatherSunny size={96} />;
       case 'leichter regen':
         return <TiWeatherShower size={96} />;
