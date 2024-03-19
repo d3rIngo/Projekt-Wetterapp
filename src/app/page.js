@@ -47,7 +47,7 @@ export default function Home() {
         case 'klarer himmel':
           setWeatherClass("sunny");
           break;
-        case 'Ein paar Wolken':
+        case 'ein paar wolken':
           setWeatherClass("sunny");
           break;
         case 'leichter regen':
@@ -104,7 +104,7 @@ export default function Home() {
     switch (weatherDescription.toLowerCase()) {
       case 'klarer himmel':
         return <TiWeatherSunny size={96} />;
-      case 'Ein paar Wolken':
+      case 'ein paar wolken':
         return <TiWeatherSunny size={96} />;
       case 'leichter regen':
         return <TiWeatherShower size={96} />;
