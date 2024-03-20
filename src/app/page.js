@@ -2,31 +2,27 @@
 
 import { useState } from 'react';
 import axios from 'axios';
-import { TiWeatherCloudy, TiWeatherSnow, TiWeatherWindy, TiWeatherShower, TiWeatherSunny } from 'react-icons/ti'; // Importiere Icons von react-icons
+import { TiWeatherCloudy, TiWeatherSnow, TiWeatherWindy, TiWeatherShower, TiWeatherSunny } from 'react-icons/ti';
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export default function Home() {
-  // Zustände für den eingegebenen Ort und die Wetterdaten
   const [location, setLocation] = useState("");
   const [weatherData, setWeatherData] = useState(null);
-  const [weatherClass, setWeatherClass] = useState(""); // Zustand für die dynamische Hintergrundklasse
+  const [weatherClass, setWeatherClass] = useState("");
 
-  // Funktion zum Aktualisieren des eingegebenen Orts
   const handleLocationChange = (e) => {
     setLocation(e.target.value);
   };
 
-  // Funktion zum Umwandeln der Temperatur von Kelvin in Celsius
   const kelvinToCelsius = (kelvin) => {
     return kelvin - 273.15;
   };
 
-  // Funktion zum Abrufen der Wetterdaten von der API
   const fetchWeatherData = async () => {
     try {
       const apiKey = '703ea8efa9355029c4fed6200d35ec0c';
       let apiUrl = '';
       
-      // Überprüfen, ob die Eingabe eine Postleitzahl ist
       const isZipCode = /^\d{5}$/.test(location);
 
       if (isZipCode) {
@@ -40,9 +36,6 @@ export default function Home() {
       response.data.main.temp_c = celsiusTemperature;
       setWeatherData(response.data);
 
-      console.log('Weather Description:', response.data.weather[0].description);
-
-      // Setze die Hintergrundklasse basierend auf dem Wetterzustand
       switch (response.data.weather[0].description.toLowerCase()) {
         case 'klarer himmel':
           setWeatherClass("sunny");
@@ -92,14 +85,12 @@ export default function Home() {
     }
   };
 
-  // Funktion zum Verarbeiten des Tastatur-Events
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       fetchWeatherData();
     }
   };
 
-  // Funktion zur Zuordnung von Icons zu Wetterzuständen
   const getWeatherIcon = (weatherDescription) => {
     switch (weatherDescription.toLowerCase()) {
       case 'klarer himmel':
@@ -129,43 +120,34 @@ export default function Home() {
       case 'windig':
         return <TiWeatherWindy size={96} />;
       default:
-        return null; // Standard-Icon
+        return null;
     }
   };
 
-  // JSX für die Darstellung der Komponente
   return (
-    <div className={`container ${weatherClass}`}> {/* Hintergrundklasse dynamisch hinzufügen */}
+    <div className={`container ${weatherClass}`}>
       <h1>Wetter-App</h1>
-      <p>Gib einen Ort oder die PLZ ein und klicke danach auf
-      &quot;Wetter abrufen&quot;, um das aktuelle Wetter zu sehen.</p>
-      {/* Eingabefeld für den Ort oder die Postleitzahl */}
+      <p>Gib einen Ort oder die PLZ ein und klicke danach auf &quot;Wetter abrufen&quot;, um das aktuelle Wetter zu sehen.</p>
       <input
         type="text"
         value={location}
         onChange={handleLocationChange}
-        onKeyPress={handleKeyPress} // Handle Enter key press
+        onKeyPress={handleKeyPress}
         placeholder="Ort oder Postleitzahl eingeben"
       />
-      {/* Button zum Abrufen der Wetterdaten */}
       <button onClick={fetchWeatherData}>Wetter abrufen</button>
-      {/* Anzeige der Wetterdaten, wenn vorhanden */}
       {weatherData && (
         <div>
-          {/* Überschrift mit dem Namen des Orts */}
           <h2>Aktuelles Wetter für {weatherData.name}:</h2>
-          {/* Anzeige der Temperatur */}
           <p>Temperatur: {weatherData.main.temp_c.toFixed(1)}°C</p>
-          {/* Anzeige des Wetters */}
           <p>Wetterzustand: {weatherData.weather[0].description}</p>
-          {/* Anzeige der Luftfeuchtigkeit */}
           <p>Luftfeuchtigkeit: {weatherData.main.humidity}%</p>
-          {/* Anzeige des Icons */}
           <div className="weather-icon" style={{ textAlign: 'center' }}>
             {getWeatherIcon(weatherData.weather[0].description)}
           </div>
         </div>
       )}
+      <SpeedInsights url="https://wetter-now.vercel.app" />
     </div>
   );
 }
