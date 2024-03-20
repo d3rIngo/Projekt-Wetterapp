@@ -12,8 +12,6 @@
 /.next/
 /out/
 
-/tests/*
-
 # production
 /build
 
