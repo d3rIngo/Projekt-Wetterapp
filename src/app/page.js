@@ -185,7 +185,7 @@ export default function Home() {
         )}
         {forecastData && (
           <div>
-            <h2 style={{ marginTop: '40px' }}>3-Tage-Wettervorhersage:</h2>
+            <h2 style={{ marginTop: '30px' }}>3-Tage-Wettervorhersage:</h2>
             <div style={{ height: '1px' }}></div> {/* Platz für den Abstand */}
             {forecastData.slice(1, 4).map((forecast, index) => {
               const minTemp = kelvinToCelsius(forecast.main.temp_min);
