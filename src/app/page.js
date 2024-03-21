@@ -51,6 +51,7 @@ export default function Home() {
           setWeatherClass("sunny");
           break;
         case 'leichter regen':
+        case 'mäßiger regen':
         case 'regen':
           setWeatherClass("showers");
           break;
