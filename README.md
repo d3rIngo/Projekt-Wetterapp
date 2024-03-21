@@ -6,7 +6,7 @@ This is a weather application built with Next.js, Tailwind CSS, and the OpenWeat
 
 Check out the live demo hosted on Vercel
 
-[<img src="./src/app/favicon.ico" alt="Wetter Now">](https://wetter-now.vercel.app)
+(./src/app/favicon.ico)[Wetter Now](https://wetter-now.vercel.app)
 
 ## Features
 Enter a location or zip code to fetch current weather data.
