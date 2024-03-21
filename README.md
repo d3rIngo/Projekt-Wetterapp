@@ -1,12 +1,12 @@
-# Wetter Now
+# Wetter-Now-App
 
 This is a weather application built with Next.js, Tailwind CSS, and the OpenWeather API.
 
 ## Live Demo
 
-Check out the live demo hosted on [Vercel]
+Check out the live demo hosted on Vercel
 
-[![Wetter Now](https://i.ibb.co/9hx8w6s/wetter-now.png)](https://wetter-now.vercel.app)
+[![Wetter Now](./src/app/favicon.ico)](https://wetter-now.vercel.app)
 
 ## Features
 Enter a location or zip code to fetch current weather data.
