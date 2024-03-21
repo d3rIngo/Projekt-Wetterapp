@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'; // Import von React-Hooks
 import axios from 'axios'; // Import für HTTP-Anfragen
 import { TiWeatherCloudy, TiWeatherSnow, TiWeatherWindy, TiWeatherShower, TiWeatherSunny } from 'react-icons/ti'; // Import von Wetter-Icons
-import { SpeedInsights } from "@vercel/speed-insights/next"; // Import für Geschwindigkeitsanalyse
+import Head from 'next/head'; // Import von Head-Komponente von next/head
 
 // Hauptkomponente für die Wetter-App
 export default function Home() {
@@ -163,59 +163,62 @@ export default function Home() {
   
     // Rendern der Komponente mit JSX
     return (
-      <div className={`container ${weatherClass}`} style={{ overflowY: 'auto', maxHeight: '100vh' }}> 
-        <h1>Wetter-App</h1>
-        <p>Gib einen Ort oder die PLZ ein und klicke danach auf &quot;Wetter abrufen&quot;, um das aktuelle Wetter zu sehen.</p>
-        <input
-          type="text"
-          value={location}
-          onChange={handleLocationChange}
-          onKeyPress={handleKeyPress}
-          placeholder="Ort oder Postleitzahl eingeben"
-        />
-        <button onClick={handleButtonClick}>Wetter abrufen</button>
-        {weatherData && (
-          <div>
-            <h2>Aktuelles Wetter für {weatherData.name}:</h2>
-            <p>Temperatur: {weatherData.main.temp_c.toFixed(1)}°C</p>
-            <p>Wetterzustand: {weatherData.weather[0].description}</p>
-            <p>Luftfeuchtigkeit: {weatherData.main.humidity}%</p>
-            <div className="weather-icon" style={{ textAlign: 'center' }}>
-              {getWeatherIcon(weatherData.weather[0].description)}
+      <>
+        <Head>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        </Head>
+        <div className={`container ${weatherClass}`} style={{ overflowY: 'auto', maxHeight: '100vh' }}> 
+          <h1>Wetter-App</h1>
+          <p>Gib einen Ort oder die PLZ ein und klicke danach auf &quot;Wetter abrufen&quot;, um das aktuelle Wetter zu sehen.</p>
+          <input
+            type="text"
+            value={location}
+            onChange={handleLocationChange}
+            onKeyPress={handleKeyPress}
+            placeholder="Ort oder Postleitzahl eingeben"
+          />
+          <button onClick={handleButtonClick}>Wetter abrufen</button>
+          {weatherData && (
+            <div>
+              <h2>Aktuelles Wetter für {weatherData.name}:</h2>
+              <p>Temperatur: {weatherData.main.temp_c.toFixed(1)}°C</p>
+              <p>Wetterzustand: {weatherData.weather[0].description}</p>
+              <p>Luftfeuchtigkeit: {weatherData.main.humidity}%</p>
+              <div className="weather-icon" style={{ textAlign: 'center' }}>
+                {getWeatherIcon(weatherData.weather[0].description)}
+              </div>
             </div>
-          </div>
-        )}
-        {forecastData && (
-          <div>
-            <h2 style={{ marginTop: '20px' }}>Wettervorhersage:</h2>
-            <div style={{ height: '1px' }}></div> {/* Platz für den Abstand */}
-            {forecastData.slice(1, 4).map((forecast, index) => {
-              const minTemp = kelvinToCelsius(forecast.main.temp_min);
-              const maxTemp = kelvinToCelsius(forecast.main.temp_max);
-              const earlyMorningTemp = kelvinToCelsius(forecast.main.feels_like); // Temperatur am frühen Morgen
-              return (
-                <div key={index}>
-                  <h3>
-                    {new Date(
-                      new Date().getTime() + (index + 1) * 24 * 60 * 60 * 1000
-                    ).toLocaleDateString("de-DE", { weekday: "long" })}
-                  </h3>
-                  <p>
-                    Temperatur:{" "}
-                    {earlyMorningTemp.toFixed(1)}°C -{" "}
-                    {maxTemp.toFixed(1)}°C
-                  </p>
-                  <p>Wetterzustand: {forecast.weather[0].description}</p>
-                  <div className="weather-icon" style={{ textAlign: "center" }}>
-                    {getWeatherIcon(forecast.weather[0].description)}
+          )}
+          {forecastData && (
+            <div>
+              <h2 style={{ marginTop: '20px' }}>Wettervorhersage:</h2>
+              <div style={{ height: '1px' }}></div> {/* Platz für den Abstand */}
+              {forecastData.slice(1, 4).map((forecast, index) => {
+                const minTemp = kelvinToCelsius(forecast.main.temp_min);
+                const maxTemp = kelvinToCelsius(forecast.main.temp_max);
+                const earlyMorningTemp = kelvinToCelsius(forecast.main.feels_like); // Temperatur am frühen Morgen
+                return (
+                  <div key={index}>
+                    <h3>
+                      {new Date(
+                        new Date().getTime() + (index + 1) * 24 * 60 * 60 * 1000
+                      ).toLocaleDateString("de-DE", { weekday: "long" })}
+                    </h3>
+                    <p>
+                      Temperatur:{" "}
+                      {earlyMorningTemp.toFixed(1)}°C -{" "}
+                      {maxTemp.toFixed(1)}°C
+                    </p>
+                    <p>Wetterzustand: {forecast.weather[0].description}</p>
+                    <div className="weather-icon" style={{ textAlign: "center" }}>
+                      {getWeatherIcon(forecast.weather[0].description)}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
-        <SpeedInsights url="https://wetter-now.vercel.app" /> {/* Einbindung der Geschwindigkeitsanalyse */}
-      </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </>
     );
-  }
-  
+}
