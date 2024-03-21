@@ -4,20 +4,21 @@ This is a weather application built with Next.js, Tailwind CSS, and the OpenWeat
 
 ## Live Demo
 
-Check out the live demo hosted on Vercel
+Check out the live demo hosted on Vercel:
 
-![Wetter Now](./src/app/favicon.ico) [Wetter Now](https://wetter-now.vercel.app)
+[<img src="./src/app/favicon.ico" alt="Wetter Now" width="50">](https://wetter-now.vercel.app)
+[Wetter Now](https://wetter-now.vercel.app)
 
 ## Features
-Enter a location or zip code to fetch current weather data.
-View current weather conditions including temperature, description, and humidity.
-Get a 3-day weather forecast.
-Dynamic background color based on weather conditions.
+- Enter a location or zip code to fetch current weather data.
+- View current weather conditions including temperature, description, and humidity.
+- Get a 3-day weather forecast.
+- Dynamic background color based on weather conditions.
 
 ## Technologies Used
-Next.js
-Tailwind CSS
-OpenWeather API
+- Next.js
+- Tailwind CSS
+- OpenWeather API
 
 ## Getting Started
 
@@ -33,7 +34,7 @@ Then, install the dependencies:
 ```bash
 npm install
 ```
-## Don't forget to add a API key in secrets, called: NEXT_PUBLIC_OPENWEATHER_API_KEY
+## Don't forget to add an API key in secrets, called: NEXT_PUBLIC_OPENWEATHER_API_KEY
 
 After that, you can start the development server:
 
