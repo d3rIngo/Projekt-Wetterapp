@@ -7,48 +7,48 @@ import Head from 'next/head'; // Import von Head-Komponente von next/head
 
 // Hauptkomponente für die Wetter-App
 export default function Home() {
-  // Zustandsvariablen für Ort, Wetterdaten, Wetterklasse, Vorhersagedaten und Fetch-Status
+  // Zustandsvariablen für den Ort, die aktuellen Wetterdaten, die Wetterklasse, die Wettervorhersagedaten und den Fetch-Status
   const [location, setLocation] = useState(""); // Zustand für den eingegebenen Ort
   const [weatherData, setWeatherData] = useState(null); // Zustand für die aktuellen Wetterdaten
   const [weatherClass, setWeatherClass] = useState(""); // Zustand für die Wetterklasse
   const [forecastData, setForecastData] = useState(null); // Zustand für die Wettervorhersagedaten
   const [fetchingForecast, setFetchingForecast] = useState(false); // Zustand für den Fetch-Status der Vorhersagedaten
-  const [buttonClicked, setButtonClicked] = useState(false); // Zustand, um den Klick auf den Button zu verfolgen
+  const [forecastButtonClicked, setForecastButtonClicked] = useState(false); // Zustand, um den Klick auf den Vorhersage-Button zu verfolgen
 
   // Funktion zum Behandeln der Ortseingabe
   const handleLocationChange = (e) => {
     setLocation(e.target.value);
   };
 
+  // Funktion zur Umrechnung von Kelvin in Celsius
+  const kelvinToCelsius = (kelvin) => {
+    return kelvin - 273.15;
+  };
+
   // Funktion zum Behandeln des Tastendrucks (Enter-Taste)
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
-      // Aufruf der Funktion zum Abrufen der Wetterdaten und setzen von buttonClicked auf true
+      // Aufruf der Funktion zum Abrufen der Wetterdaten und setzen von fetchingForecast auf true
       fetchWeatherData();
-      setButtonClicked(true);
+      setFetchingForecast(true);
     }
   };
 
   // Funktion zum Behandeln des Klicks auf den Button "Wetter abrufen"
   const handleButtonClick = () => {
-    // Aufruf der Funktion zum Abrufen der Wetterdaten und setzen von buttonClicked auf true
+    // Aufruf der Funktion zum Abrufen der Wetterdaten und setzen von fetchingForecast auf true
     fetchWeatherData();
-    setButtonClicked(true);
+    setFetchingForecast(true);
+    setForecastButtonClicked(true); // Setzen des Zustands, um anzuzeigen, dass der Button geklickt wurde
   };
 
-  // Effekt-Hook zur Abrufung der Wettervorhersagedaten bei Änderung von fetchingForecast, location und buttonClicked
+  // Effekt-Hook zur Abrufung der Wettervorhersagedaten bei Änderung von fetchingForecast und location
   useEffect(() => {
-    // Überprüfen, ob fetchingForecast wahr, location einen Wert hat und buttonClicked wahr ist,
-    // um die Vorhersagedaten abzurufen
-    if (fetchingForecast && location && buttonClicked) {
+    // Überprüfen, ob fetchingForecast wahr und location einen Wert hat, um die Vorhersagedaten abzurufen
+    if (fetchingForecast && location && forecastButtonClicked) {
       fetchForecastData();
     }
-  }, [fetchingForecast, buttonClicked]); // Die Vorhersagedaten werden aktualisiert, wenn sich fetchingForecast, location oder buttonClicked ändern
-
-  // Funktion zur Umrechnung von Kelvin in Celsius
-  const kelvinToCelsius = (kelvin) => {
-    return kelvin - 273.15;
-  };
+  }, [fetchingForecast, forecastButtonClicked]); // Die Vorhersagedaten werden aktualisiert, wenn sich fetchingForecast oder forecastButtonClicked ändern
 
   // Funktion zum Abrufen der aktuellen Wetterdaten
   const fetchWeatherData = async () => {
@@ -95,7 +95,7 @@ export default function Home() {
           setWeatherClass("snow");
           break;
         case 'windig':
-        case 'mäßiger wind': 
+        case 'mäßiger wind':
           setWeatherClass("windy");
           break;
         default:
@@ -135,7 +135,7 @@ export default function Home() {
 
   // Funktion zur Auswahl des Wettericons basierend auf der Wetterbeschreibung
   const getWeatherIcon = (weatherDescription) => {
-    switch (weatherDescription.toLowerCase()) {
+    switch     (weatherDescription.toLowerCase()) {
       case 'klarer himmel':
       case 'ein paar wolken':
         return <TiWeatherSunny size={96} />;
@@ -149,6 +149,7 @@ export default function Home() {
       case 'überwiegend bedeckt':
       case 'überwiegend bewölkt':
       case 'mäßig bewölkt':
+      case 'wolken':
         return <TiWeatherCloudy size={96} />;
       case 'schnee':
       case 'mäßiger schnee':
@@ -158,68 +159,68 @@ export default function Home() {
         return <TiWeatherWindy size={96} />;
       default:
         return null;
-        }
-      };
-      
-      // Rendern der Komponente mit JSX
-      return (
-        <>
-          <Head>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-          </Head>
-          <div className={`container ${weatherClass}`} style={{ overflowY: 'auto', maxHeight: '100vh' }}> 
-            <h1>Wetter-App</h1>
-            <p>Gib einen Ort oder die PLZ ein und klicke danach auf "Wetter abrufen", um das aktuelle Wetter zu sehen.</p>
-            <input
-              type="text"
-              value={location}
-              onChange={handleLocationChange}
-              onKeyPress={handleKeyPress}
-              placeholder="Ort oder Postleitzahl eingeben"
-            />
-            <button onClick={handleButtonClick}>Wetter abrufen</button>
-            {weatherData && (
-              <div>
-                <h2>Aktuelles Wetter für {weatherData.name}:</h2>
-                <p>Temperatur: {weatherData.main.temp_c.toFixed(1)}°C</p>
-                <p>Wetterzustand: {weatherData.weather[0].description}</p>
-                <p>Luftfeuchtigkeit: {weatherData.main.humidity}%</p>
-                <div className="weather-icon" style={{ textAlign: 'center' }}>
-                  {getWeatherIcon(weatherData.weather[0].description)}
-                </div>
-              </div>
-            )}
-            {forecastData && fetchingForecast && (
-              <div>
-                <h2 style={{ marginTop: '20px' }}>Wettervorhersage:</h2>
-                <div style={{ height: '1px' }}></div> {/* Platz für den Abstand */}
-                {forecastData.slice(1, 4).map((forecast, index) => {
-                  const minTemp = kelvinToCelsius(forecast.main.temp_min);
-                  const maxTemp = kelvinToCelsius(forecast.main.temp_max);
-                  const earlyMorningTemp = kelvinToCelsius(forecast.main.feels_like); // Temperatur am frühen Morgen
-                  return (
-                    <div key={index}>
-                      <h3>
-                        {new Date(
-                          new Date().getTime() + (index + 1) * 24 * 60 * 60 * 1000
-                        ).toLocaleDateString("de-DE", { weekday: "long" })}
-                      </h3>
-                      <p>
-                        Temperatur:{" "}
-                        {earlyMorningTemp.toFixed(1)}°C -{" "}
-                        {maxTemp.toFixed(1)}°C
-                      </p>
-                      <p>Wetterzustand: {forecast.weather[0].description}</p>
-                      <div className="weather-icon" style={{ textAlign: "center" }}>
-                        {getWeatherIcon(forecast.weather[0].description)}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
+    }
+  };
+
+  // Rendern der Komponenten mit JSX
+  return (
+    <>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Head>
+      <div className={`container ${weatherClass}`} style={{ overflowY: 'auto', maxHeight: '100vh' }}>
+        <h1>Wetter-App</h1>
+        <p>Gib einen Ort oder die PLZ ein und klicke danach auf "Wetter abrufen", um das aktuelle Wetter zu sehen.</p>
+        <input
+          type="text"
+          value={location}
+          onChange={handleLocationChange}
+          onKeyPress={handleKeyPress}
+          placeholder="Ort oder Postleitzahl eingeben"
+        />
+        <button onClick={handleButtonClick}>Wetter abrufen</button>
+        {weatherData && (
+          <div>
+            <h2>Aktuelles Wetter für {weatherData.name}:</h2>
+            <p>Temperatur: {weatherData.main.temp_c.toFixed(1)}°C</p>
+            <p>Wetterzustand: {weatherData.weather[0].description}</p>
+            <p>Luftfeuchtigkeit: {weatherData.main.humidity}%</p>
+            <div className="weather-icon" style={{ textAlign: 'center' }}>
+              {getWeatherIcon(weatherData.weather[0].description)}
+            </div>
           </div>
-        </>
-      );
-    };
-    
+        )}
+        {forecastData && fetchingForecast && (
+          <div>
+            <h2 style={{ marginTop: '20px' }}>Wettervorhersage:</h2>
+            <div style={{ height: '1px' }}></div> {/* Platz für den Abstand */}
+            {forecastData.slice(1, 4).map((forecast, index) => {
+              const minTemp = kelvinToCelsius(forecast.main.temp_min);
+              const maxTemp = kelvinToCelsius(forecast.main.temp_max);
+              const earlyMorningTemp = kelvinToCelsius(forecast.main.feels_like); // Temperatur am frühen Morgen
+              return (
+                <div key={index}>
+                  <h3>
+                    {new Date(
+                      new Date().getTime() + (index + 1) * 24 * 60 * 60 * 1000
+                    ).toLocaleDateString("de-DE", { weekday: "long" })}
+                  </h3>
+                  <p>
+                    Temperatur:{" "}
+                    {earlyMorningTemp.toFixed(1)}°C -{" "}
+                    {maxTemp.toFixed(1)}°C
+                  </p>
+                  <p>Wetterzustand: {forecast.weather[0].description}</p>
+                  <div className="weather-icon" style={{ textAlign: "center" }}>
+                    {getWeatherIcon(forecast.weather[0].description)}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </>
+  );
+};
+
