@@ -69,6 +69,7 @@ export default function Home() {
           setWeatherClass("snow");
           break;
         case 'windig':
+        case 'mäßiger wind':
           setWeatherClass("windy");
           break;
         default:
@@ -164,11 +165,13 @@ export default function Home() {
       case 'leicht bedeckt':
       case 'überwiegend bedeckt':
       case 'überwiegend bewölkt':
+      case 'mäßig bewölkt':
         return <TiWeatherCloudy size={96} />;
       case 'schnee':
       case 'mäßiger schnee':
         return <TiWeatherSnow size={96} />;
       case 'windig':
+      case 'mäßiger wind':
         return <TiWeatherWindy size={96} />;
       default:
         return null;
