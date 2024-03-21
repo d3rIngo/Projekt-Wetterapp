@@ -27,7 +27,7 @@ export default function Home() {
   // Funktion zum Abrufen der aktuellen Wetterdaten
   const fetchWeatherData = async () => {
     try {
-      const apiKey = process.env.REACT_APP_OPENWEATHER_API_KEY;
+      const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
       let apiUrl = '';
       
       const isZipCode = /^\d{5}$/.test(location);
@@ -86,7 +86,7 @@ export default function Home() {
   // Funktion zum Abrufen der Wettervorhersagedaten
   const fetchForecastData = async () => {
     try {
-      const apiKey = '703ea8efa9355029c4fed6200d35ec0c';
+      const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
       let apiUrl = '';
       
       const isZipCode = /^\d{5}$/.test(location);
