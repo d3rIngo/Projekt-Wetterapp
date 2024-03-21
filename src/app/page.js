@@ -123,6 +123,7 @@ export default function Home() {
       case 'ein paar wolken':
         return <TiWeatherSunny size={96} />;
       case 'leichter regen':
+      case 'mäßiger regen':
       case 'regen':
         return <TiWeatherShower size={96} />;
       case 'bewölkt':
@@ -131,12 +132,12 @@ export default function Home() {
       case 'überwiegend bedeckt':
       case 'überwiegend bewölkt':
         return <TiWeatherCloudy size={96} />;
-        case 'schnee':
-          return <TiWeatherSnow size={96} />;
-        case 'windig':
-          return <TiWeatherWindy size={96} />;
-        default:
-          return null;
+      case 'schnee':
+        return <TiWeatherSnow size={96} />;
+      case 'windig':
+        return <TiWeatherWindy size={96} />;
+      default:
+        return null;
       }
     };
     
