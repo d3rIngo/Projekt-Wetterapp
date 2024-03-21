@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
+    // Konfiguration der TypeScript-Compileroptionen
     "paths": {
-      "@/*": ["./src/*"]
+      // Definieren von Alias-Pfaden für Module-Importe
+      "@/*": ["./src/*"] // Alias-Pfad für Importe von Modulen im "src"-Verzeichnis
     }
   }
 }

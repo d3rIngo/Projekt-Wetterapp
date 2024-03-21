@@ -132,7 +132,7 @@ export default function Home() {
     if (fetchingForecast && location) {
       fetchForecastData();
     }
-  }, [fetchingForecast]); // Die Vorhersagedaten werden aktualisiert, wenn sich fetchingForecast oder location ändern
+  }, [fetchingForecast]); // Die Vorhersagedaten werden aktualisiert, wenn sich fetchingForecast ändert
 
   // Funktion zum Behandeln des Tastendrucks (Enter-Taste)
   const handleKeyPress = (e) => {
@@ -208,7 +208,7 @@ export default function Home() {
         )}
         {forecastData && (
           <div>
-            <h2 style={{ marginTop: '20px' }}>Wettervorhersage:</h2>
+            <h2 style={{ marginTop: '25px' }}>Wettervorhersage:</h2>
             <div style={{ height: '1px' }}></div> {/* Platz für den Abstand */}
             {forecastData.slice(1, 4).map((forecast, index) => {
               const minTemp = kelvinToCelsius(forecast.main.temp_min);
@@ -239,4 +239,3 @@ export default function Home() {
     </>
   );
 }
-

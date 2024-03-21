@@ -1,36 +1,47 @@
 name: CI/CD Pipeline
 
+# Trigger für den Start der Pipeline bei einem Push auf den main-Zweig
 on:
   push:
     branches: [main]
 
 jobs:
+  # Job zum Bauen der React-Anwendung
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      # Schritt zum Auschecken des Repositorys
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Setup Node.js environment
-      uses: actions/setup-node@v2
-      with:
-        node-version: '18.x'
+      # Schritt zum Einrichten der Node.js-Umgebung
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.x'
 
-    - name: Install dependencies
-      run: npm install
+      # Schritt zum Installieren der Abhängigkeiten
+      - name: Install dependencies
+        run: npm install
 
-    - name: Set up environment variables
-      run: echo "NEXT_PUBLIC_OPENWEATHER_API_KEY=${{ secrets.OPENWEATHER_API_KEY }}" >> .env
+      # Schritt zum Einrichten von Umgebungsvariablen
+      - name: Set up environment variables
+        run: echo "NEXT_PUBLIC_OPENWEATHER_API_KEY=${{ secrets.OPENWEATHER_API_KEY }}" >> .env
     
-    - name: Build React app
-      run: npm run build
+      # Schritt zum Erstellen der React-Anwendung
+      - name: Build React app
+        run: npm run build
   
+  # Job für Cypress-Tests
   cypress:
     runs-on: ubuntu-latest
     steps:
+      # Schritt zum Auschecken des Repositorys
       - name: Checkout
         uses: actions/checkout@v3
+
+      # Schritt zum Ausführen von Cypress-Tests
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
