@@ -7,13 +7,12 @@ import Head from 'next/head'; // Import von Head-Komponente von next/head
 
 // Hauptkomponente für die Wetter-App
 export default function Home() {
-  // Zustandsvariablen für den Ort, die aktuellen Wetterdaten, die Wetterklasse, die Wettervorhersagedaten und den Fetch-Status
+  // Zustandsvariablen für Ort, Wetterdaten, Wetterklasse, Vorhersagedaten und Fetch-Status
   const [location, setLocation] = useState(""); // Zustand für den eingegebenen Ort
   const [weatherData, setWeatherData] = useState(null); // Zustand für die aktuellen Wetterdaten
   const [weatherClass, setWeatherClass] = useState(""); // Zustand für die Wetterklasse
   const [forecastData, setForecastData] = useState(null); // Zustand für die Wettervorhersagedaten
   const [fetchingForecast, setFetchingForecast] = useState(false); // Zustand für den Fetch-Status der Vorhersagedaten
-  const [forecastButtonClicked, setForecastButtonClicked] = useState(false); // Zustand, um den Klick auf den Vorhersage-Button zu verfolgen
 
   // Funktion zum Behandeln der Ortseingabe
   const handleLocationChange = (e) => {
@@ -24,31 +23,6 @@ export default function Home() {
   const kelvinToCelsius = (kelvin) => {
     return kelvin - 273.15;
   };
-
-  // Funktion zum Behandeln des Tastendrucks (Enter-Taste)
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      // Aufruf der Funktion zum Abrufen der Wetterdaten und setzen von fetchingForecast auf true
-      fetchWeatherData();
-      setFetchingForecast(true);
-    }
-  };
-
-  // Funktion zum Behandeln des Klicks auf den Button "Wetter abrufen"
-  const handleButtonClick = () => {
-    // Aufruf der Funktion zum Abrufen der Wetterdaten und setzen von fetchingForecast auf true
-    fetchWeatherData();
-    setFetchingForecast(true);
-    setForecastButtonClicked(true); // Setzen des Zustands, um anzuzeigen, dass der Button geklickt wurde
-  };
-
-  // Effekt-Hook zur Abrufung der Wettervorhersagedaten bei Änderung von fetchingForecast und location
-  useEffect(() => {
-    // Überprüfen, ob fetchingForecast wahr und location einen Wert hat, um die Vorhersagedaten abzurufen
-    if (fetchingForecast && location && forecastButtonClicked) {
-      fetchForecastData();
-    }
-  }, [fetchingForecast, forecastButtonClicked]); // Die Vorhersagedaten werden aktualisiert, wenn sich fetchingForecast oder forecastButtonClicked ändern
 
   // Funktion zum Abrufen der aktuellen Wetterdaten
   const fetchWeatherData = async () => {
@@ -95,7 +69,6 @@ export default function Home() {
           setWeatherClass("snow");
           break;
         case 'windig':
-        case 'mäßiger wind':
           setWeatherClass("windy");
           break;
         default:
@@ -133,9 +106,52 @@ export default function Home() {
     }
   };
 
+  // Effekt-Hook zur Überwachung von Tastatureingaben und Aktualisierung des Fetch-Status
+  useEffect(() => {
+    // Funktion zum Behandeln des Tastendrucks (Enter-Taste)
+    const handleKeyPress = (e) => {
+      if (e.key === 'Enter') {
+        // Wenn Enter gedrückt wird, wird der Fetch-Status für die Vorhersageaktivierung auf true gesetzt
+        setFetchingForecast(true);
+      }
+    };
+
+    // Hinzufügen eines Event-Listeners für Tastaturereignisse beim Rendern der Komponente
+    document.addEventListener('keydown', handleKeyPress);
+
+    // Entfernen des Event-Listeners beim Entfernen der Komponente oder bei Änderungen
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, []); // Leere Abhängigkeitsliste, um sicherzustellen, dass der Effekt nur einmalig ausgeführt wird
+
+  // Effekt-Hook zur Abrufung der Wettervorhersagedaten bei Änderung von fetchingForecast und location
+  useEffect(() => {
+    // Überprüfen, ob fetchingForecast wahr und location einen Wert hat, um die Vorhersagedaten abzurufen
+    if (fetchingForecast && location) {
+      fetchForecastData();
+    }
+  }, [fetchingForecast]); // Die Vorhersagedaten werden aktualisiert, wenn sich fetchingForecast oder location ändern
+
+  // Funktion zum Behandeln des Tastendrucks (Enter-Taste)
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      // Aufruf der Funktion zum Abrufen der Wetterdaten und setzen von fetchingForecast auf true
+      fetchWeatherData();
+      setFetchingForecast(true);
+    }
+  };
+
+  // Funktion zum Behandeln des Klicks auf den Button "Wetter abrufen"
+  const handleButtonClick = () => {
+    // Aufruf der Funktion zum Abrufen der Wetterdaten und setzen von fetchingForecast auf true
+    fetchWeatherData();
+    setFetchingForecast(true);
+  };
+
   // Funktion zur Auswahl des Wettericons basierend auf der Wetterbeschreibung
   const getWeatherIcon = (weatherDescription) => {
-    switch     (weatherDescription.toLowerCase()) {
+    switch (weatherDescription.toLowerCase()) {
       case 'klarer himmel':
       case 'ein paar wolken':
         return <TiWeatherSunny size={96} />;
@@ -148,29 +164,26 @@ export default function Home() {
       case 'leicht bedeckt':
       case 'überwiegend bedeckt':
       case 'überwiegend bewölkt':
-      case 'mäßig bewölkt':
-      case 'wolken':
         return <TiWeatherCloudy size={96} />;
       case 'schnee':
       case 'mäßiger schnee':
         return <TiWeatherSnow size={96} />;
       case 'windig':
-      case 'mäßiger wind':
         return <TiWeatherWindy size={96} />;
       default:
         return null;
     }
   };
-
-  // Rendern der Komponenten mit JSX
+      
+  // Rendern der Komponente mit JSX
   return (
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
-      <div className={`container ${weatherClass}`} style={{ overflowY: 'auto', maxHeight: '100vh' }}>
+      <div className={`container ${weatherClass}`} style={{ overflowY: 'auto', maxHeight: '100vh' }}> 
         <h1>Wetter-App</h1>
-        <p>Gib einen Ort oder die PLZ ein und klicke danach auf "Wetter abrufen", um das aktuelle Wetter zu sehen.</p>
+        <p>Gib einen Ort oder die PLZ ein und klicke danach auf &quot;Wetter abrufen&quot;, um das aktuelle Wetter zu sehen.</p>
         <input
           type="text"
           value={location}
@@ -190,7 +203,7 @@ export default function Home() {
             </div>
           </div>
         )}
-        {forecastData && fetchingForecast && (
+        {forecastData && (
           <div>
             <h2 style={{ marginTop: '20px' }}>Wettervorhersage:</h2>
             <div style={{ height: '1px' }}></div> {/* Platz für den Abstand */}
@@ -222,5 +235,5 @@ export default function Home() {
       </div>
     </>
   );
-};
+}
 
