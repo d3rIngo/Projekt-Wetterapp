@@ -4,7 +4,7 @@ This is a weather application built with Next.js, Tailwind CSS, and the OpenWeat
 
 ## Live Demo
 
-Check out the live demo hosted on [Vercel](https://wetter-now.vercel.app).
+Check out the live demo hosted on [Vercel]
 
 [![Wetter Now](https://i.ibb.co/9hx8w6s/wetter-now.png)](https://wetter-now.vercel.app)
 
@@ -46,4 +46,4 @@ Open http://localhost:3000 in your browser to see the application.
 ## Deploy on Vercel
 The easiest way to deploy your Next.js app is to use the Vercel Platform from the creators of Next.js.
 
-Check out the Next.js deployment documentation for more details.
+Check out the [Next.js](https://nextjs.org/docs/pages/building-your-application/deploying) deployment documentation for more details.
