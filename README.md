@@ -1,6 +1,8 @@
 # Wetter-Now-App
 
-This is a weather application built with Next.js, Tailwind CSS, and the OpenWeather API.
+This is a weather application built with Next.js, a React framework for building server-side rendered and statically generated web applications. Tailwind CSS is used for styling, providing a utility-first CSS framework that allows for rapid development and customization. The application fetches weather data from the OpenWeather API to provide real-time weather information.
+
+For the German version of this README, click [here](./README-de.md).
 
 ## Live Demo
 
@@ -19,6 +21,22 @@ Check out the live demo hosted on Vercel:
 - Next.js
 - Tailwind CSS
 - OpenWeather API
+- ESLint
+- GitHub Actions (for CI/CD)
+- Cypress (for End-to-End Testing)
+- Vercel (for Deployment and Hosting)
+
+## CI/CD Pipeline
+
+Continuous Integration/Continuous Deployment (CI/CD) is set up using GitHub Actions. The CI/CD pipeline automates the process of building, testing, and deploying the application.
+
+## Testing
+
+Cypress is used for end-to-end testing to ensure the application functions correctly.
+
+## Performance Optimization
+
+The Speed Insights tool provided by Vercel is utilized to analyze and optimize the performance of the application.
 
 ## Getting Started
 
@@ -34,9 +52,17 @@ Then, install the dependencies:
 ```bash
 npm install
 ```
-## Don't forget to add an API key in secrets, called: NEXT_PUBLIC_OPENWEATHER_API_KEY
+## Set Up API Key
 
-After that, you can start the development server:
+Make sure to add an API key for the OpenWeather API in your environment variables. Create a file named .env.local in the root directory of your project and add the following line:
+
+```bash
+NEXT_PUBLIC_OPENWEATHER_API_KEY=your_api_key_here
+```
+
+## Start the Development Server
+
+Run the Server:
 
 ```bash
 npm run dev
