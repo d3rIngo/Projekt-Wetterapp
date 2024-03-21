@@ -27,7 +27,7 @@ export default function Home() {
   // Funktion zum Abrufen der aktuellen Wetterdaten
   const fetchWeatherData = async () => {
     try {
-      const apiKey = process.env.OPENWEATHER_API_KEY;
+      const apiKey = process.env.REACT_APP_OPENWEATHER_API_KEY;
       let apiUrl = '';
       
       const isZipCode = /^\d{5}$/.test(location);
